@@ -1,0 +1,16 @@
+language: node_js
+
+env:
+  - DATABASE_URL=postgresql://postgres@localhost:5432/waiter-db
+
+node_js:  
+  - "8.11.4"
+
+before_script:
+  - psql -c 'create database  waiter-db;' -U postgres
+  - psql -U postgres -d waiter-db -a -f registration-db.sql
+
+addons:
+    apt:
+    packages:
+    - postgresql-server-dev-9.2
