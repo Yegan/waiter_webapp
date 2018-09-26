@@ -37,12 +37,7 @@ app.use(session({
   saveUninitialized: true
 }))
 
-
-app.post('/', routesWaiter.home)
-
-
-
-
+app.get('/', routesWaiter.home)
 
 // initialise the flash middleware
 app.use(flash())

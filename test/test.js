@@ -40,7 +40,7 @@ describe('Waiter Web-App', function () {
     let daysOfTheWeek = await funcWaiter.daysOfTheWeek()
 
     const daysInDatabase = daysOfTheWeek.map((r) => r.days_of_week)
-    console.log(daysInDatabase)
+    // console.log(daysInDatabase)
 
     assert.deepEqual(daysInDatabase, weekDays)
 
