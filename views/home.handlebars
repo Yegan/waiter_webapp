@@ -6,7 +6,8 @@
     <title>Waiters Web-app</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="public/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
 
 </head>
 
@@ -17,15 +18,19 @@
                 <h2>Waiter Web</h2>
             </div>
         </div>
-
-        
-        <div class="checkboxes">
-            <div class="row">
-            {{#each displayDays}}
-             <button class="btn btn-outline-secondary" type="button">{{days_of_week}}</button>
-            {{/each}}
+        <form action="/waiter/:{{user}}" method='post'>
+         <div class="row">
+            <div class="col-12-md input">
+                {{#each displayDays}}
+                <input type="checkbox" aria-label="Checkbox for following text input">{{days_of_week}}</input>
+                {{/each}}
             </div>
         </div>
+        <button type="submit">Submit</button>
+        </form>
+
+
+       
 
 
     </div>

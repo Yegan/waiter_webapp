@@ -37,7 +37,7 @@ app.use(session({
   saveUninitialized: true
 }))
 
-app.get('/', routesWaiter.home)
+app.get('/waiters/:username', routesWaiter.home)
 
 // initialise the flash middleware
 app.use(flash())
