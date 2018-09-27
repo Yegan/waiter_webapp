@@ -9,6 +9,6 @@ module.exports = {
         "it" : true,
         "require" : true,
         "beforeEach" : true,
-        "after" : true
+        "after" : true,
     }
 };
