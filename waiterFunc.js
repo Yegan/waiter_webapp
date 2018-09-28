@@ -5,7 +5,6 @@ module.exports = function (pool) {
   }
 
   async function addWaiterName (name) {
-    //console.log(name)
     let nameOfWaiter = await pool.query('select * from waiters_table where waiter_name =$1', [name])
 
     let getWaiter = nameOfWaiter.rowCount
@@ -15,8 +14,8 @@ module.exports = function (pool) {
   }
 
   async function checksWaiterName () {
-   let waiters = await pool.query('select waiter_name from waiters_table')
-   return waiters.rows
+    let waiters = await pool.query('select waiter_name from waiters_table')
+    return waiters.rows
   }
 
   async function storeShifts (waiterName, shiftDays) {
