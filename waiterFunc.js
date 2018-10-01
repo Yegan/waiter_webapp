@@ -20,15 +20,18 @@ module.exports = function (pool) {
 
   async function storeShifts (waiterName, shiftDays) {
     // found the waiter_id for the waiterName
-    let days = daysOfTheWeek()
-    let waiterResults = await pool.query('select id from waiters_table where waiter_name = $1', [waiterName])
 
-    let dayResults = await pool.query('select id from days_of_the_week where id = $1', [currentDayId])
+    let day = shiftDays
 
-    const dayId = dayResults.rows[0].id
-    const waiterId = waiterResults.rows[0].id
 
-    await pool.query('insert into shift_days(days_id, waiter_id) values($1, $2)', [dayId, waiterId])
+    let waiterResult = await pool.query('select id from waiters_table where waiter_name = $1', [waiterName])
+    let waiterId = waiterResult.rows[0].id
+    for (let eachDay of day) {
+      let dayResult = await pool.query('select id from days_of_the_week where days_of_week = $1', [eachDay])
+      let dayId = dayResult.rows[0].id
+
+      await pool.query('insert into shift_days(waiter_id, days_id) values ($1, $2)', [waiterId, dayId ])
+    }
   }
 
   async function getShifts (waiterName) {

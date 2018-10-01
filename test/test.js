@@ -60,24 +60,27 @@ describe('Waiter Web-App', function () {
   it('should store the days that a waiter has selected to work', async function () {
     // assemble - get things ready to make it happen
     let waiterShiftManager = WaiterShiftManager(pool)
+    await waiterShiftManager.addWaiterName('Yegan')
 
     let daysOfTheWeek = await waiterShiftManager.daysOfTheWeek()
     const Monday = daysOfTheWeek[0]
     const Saturday = daysOfTheWeek[5]
-    const shiftDays = [Monday.id, Saturday.id]
+
+    const shiftDays = ['Monday', 'Saturday']
 
     const waiterYegan = 'Yegan'
     // act - make it happen
 
     await waiterShiftManager.storeShifts(waiterYegan, shiftDays)
-
     // assert - did the right thing happen?
 
     // check if there is two shifts for Andy in the Database
     const shiftsForYegan = await waiterShiftManager.getShifts(waiterYegan)
+    console.log(shiftsForYegan)
 
-    assert.equal(Monday.id, shiftsForYegan[0].day_id, 'Monday shift not set correctly')
-    assert.equal(Saturday.id, shiftsForYegan[1].day_id, 'Saturday not set correctly')
+    // assert.equal()
+    assert.equal(Monday.id, shiftsForYegan[0].day_id)
+    assert.equal(Saturday.id, shiftsForYegan[1].day_id)
   })
 
   // it('should update the days that a waiter has selected to work', async function () {
