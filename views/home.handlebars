@@ -8,11 +8,11 @@
                 <h2>Waiter Web</h2>
             </div>
         </div>
-        <form action="/waiter/:{{user}}" method='post'>
+        <form action="/waiters/{{user}}" method='post'>
          <div class="row">
             <div class="col-12-md input">
                 {{#each displayDays}}
-                <input type="checkbox" value="{{id}}" aria-label="Checkbox for following text input" name = 'dayName'>{{days_of_week}}</input>
+                <input type="checkbox"  aria-label="Checkbox for following text input" name = 'dayName' value="{{days_of_week}}">{{days_of_week}} </input>
                 {{/each}}
             </div>
         </div>

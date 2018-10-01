@@ -9,29 +9,26 @@ module.exports = function (waiterFunc) {
     }
   }
 
-  return {
-    home
-  }
-
   async function selectedWorkDays (req, res, next) {
     try {
-    let waiterName =  req.params.username 
-    let days = req.body.dayName
-    let shiftData = {
-      waiter: waiterName,
-      days: Array.isArray(req.body.dayName) ? req.body.dayName : [req.body.dayName]
-    }
+      let user = req.params.username
+      let days = req.body.dayName
 
-    let addWaiter = await waiterFunc.addWaiterName(waiterName)  
-    let dayList = await waiterFunc.daysOfTheWeek()
-    let shiftDay = await waiterFunc.storeShifts(waiterName, days)
-    
+      await waiterFunc.addWaiterName(user)
+      let displayDays = await waiterFunc.daysOfTheWeek()
+      await waiterFunc.storeShifts(user, days)
 
+      let getAllShifts = await waiterFunc.getShifts(user)
 
-    res.render('home',{})
-
+      console.log(getAllShifts)
+      res.render('home', { displayDays, user, days })
     } catch (error) {
-      next(error.stack)
+      console.error('Can not post', error)
     }
+  }
+
+  return {
+    home,
+    selectedWorkDays
   }
 }

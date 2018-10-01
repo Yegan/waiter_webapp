@@ -38,6 +38,7 @@ app.use(session({
 }))
 
 app.get('/waiters/:username', routesWaiter.home)
+app.post('/waiters/:username', routesWaiter.selectedWorkDays)
 
 // initialise the flash middleware
 app.use(flash())
