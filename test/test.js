@@ -76,11 +76,29 @@ describe('Waiter Web-App', function () {
 
     // check if there is two shifts for Andy in the Database
     const shiftsForYegan = await waiterShiftManager.getShifts(waiterYegan)
-    console.log(shiftsForYegan)
+    //console.log(shiftsForYegan)
 
     // assert.equal()
     assert.equal(Monday.id, shiftsForYegan[0].day_id)
     assert.equal(Saturday.id, shiftsForYegan[1].day_id)
+  })
+
+  it ('should get all the days and all the shifts and match the waiter name to the corresponding day name of each shift ', async function () {
+    let waiterShiftManager = WaiterShiftManager(pool)
+    await waiterShiftManager.addWaiterName('Yegan')
+    //let daysOfTheWeek = await waiterShiftManager.daysOfTheWeek()
+
+    const shiftDays = ['Monday', 'Saturday']
+
+    const waiterYegan = 'Yegan'
+    // act - make it happen
+
+    await waiterShiftManager.storeShifts(waiterYegan, shiftDays)
+    
+    //let allshifts = await waiterShiftManager.getAllShifts()
+    let daysAndNames = await waiterShiftManager.getDaysAndNames()
+    console.log(daysAndNames)
+    //assert.equal(allShifts.waiter_name, {waiter_name})
   })
 
   // it('should update the days that a waiter has selected to work', async function () {
