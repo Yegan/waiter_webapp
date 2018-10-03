@@ -93,21 +93,12 @@ describe('Waiter Web-App', function () {
 
     await waiterShiftManager.storeShifts(waiterYegan, shiftDays)
 
-
-     let yegansShifts = await waiterShiftManager.aWaitersShift(waiterYegan)
+    let yegansShifts = await waiterShiftManager.aWaitersShift(waiterYegan)
     assert.equal(yegansShifts[0].waiter_name, 'Yegan')
     assert.equal(yegansShifts[0].week_day, 'Monday')
     assert.equal(yegansShifts[1].waiter_name, 'Yegan')
     assert.equal(yegansShifts[1].week_day, 'Saturday')
-
-
   })
-
-
-
-
-
-
 
   // it('should update the days that a waiter has selected to work', async function () {
 

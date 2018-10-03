@@ -72,7 +72,7 @@ module.exports = function (pool) {
     let waiterShifts = await pool.query(waiterShiftQuery, [waiterName])
     return waiterShifts.rows
   }
-
+// compares two lists against each other comparing if days of the week match and thus adding a new key value pair to the object
   async function getDaysAndNames (name) {
     let shiftForX = await aWaitersShift(name)
     let daysOfShift = await daysOfTheWeek()
@@ -83,7 +83,6 @@ module.exports = function (pool) {
         }
       }
     }
-    
     return daysOfShift
   }
 
