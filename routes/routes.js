@@ -2,8 +2,21 @@ module.exports = function (waiterFunc) {
   async function home (req, res, next) {
     try {
       let user = req.params.username
-      let displayDays = await waiterFunc.daysOfTheWeek()
+      let displayDays = await waiterFunc.getDaysAndNames(user)      
       res.render('home', { displayDays, user })
+    } catch (error) {
+      next(error.stack)
+    }
+  }
+
+  async function login (req, res, next) {
+    try {
+      let user = req.query.user
+      if (!user) {
+        res.render('user')
+      } else {
+        res.redirect(`/waiters/${user}`)
+      }
     } catch (error) {
       next(error.stack)
     }
@@ -15,12 +28,10 @@ module.exports = function (waiterFunc) {
       let days = req.body.dayName
 
       await waiterFunc.addWaiterName(user)
-      let displayDays = await waiterFunc.daysOfTheWeek()
+      // let displayDays = await waiterFunc.daysOfTheWeek()
       await waiterFunc.storeShifts(user, days)
-
-      let getAllShifts = await waiterFunc.getAllShifts()
-
-      console.log(getAllShifts)
+      // displayShifts brings an object with waiter name and week_day which is the shift day chosen by the waiter
+      let displayDays = await waiterFunc.getDaysAndNames(user)
       res.render('home', { displayDays, user, days })
     } catch (error) {
       next(error.stack)
@@ -31,8 +42,6 @@ module.exports = function (waiterFunc) {
     try {
       let displayDays = await waiterFunc.daysOfTheWeek()
       let shifts = await waiterFunc.waiterShifts()
-      console.log(shifts)
-     // let waiter = await waiterFunc.checksWaiterName()
       res.render('shifts', { displayDays, shifts })
     } catch (error) {
       next(error.stack)
@@ -42,6 +51,7 @@ module.exports = function (waiterFunc) {
   return {
     home,
     selectedWorkDays,
-    displayShifts
+    displayShifts,
+    login
   }
 }

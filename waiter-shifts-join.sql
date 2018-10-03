@@ -6,4 +6,4 @@ select
 from waiters_table 
 join shift_days on waiters_table.id = shift_days.waiter_id 
 join days_of_the_week on days_of_the_week.id = shift_days.days_id;  
--- where waiter_name = 'Yegan';
+where waiter_name = 'Yegan';

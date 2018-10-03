@@ -19,3 +19,10 @@ create table shift_days(
     foreign key (waiter_id) references waiters_table(id)
 );
 
+-- insert into days_of_the_week (days_of_week) values('Monday');
+-- insert into days_of_the_week (days_of_week) values('Tuesday');
+-- insert into days_of_the_week (days_of_week) values('Wednesday');
+-- insert into days_of_the_week (days_of_week) values('Thursday');
+-- insert into days_of_the_week (days_of_week) values('Friday');
+-- insert into days_of_the_week (days_of_week) values('Saturday');
+-- insert into days_of_the_week (days_of_week) values('Sunday');

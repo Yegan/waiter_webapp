@@ -37,6 +37,7 @@ app.use(session({
   saveUninitialized: true
 }))
 
+app.get('/waiters', routesWaiter.login)
 app.get('/waiters/:username', routesWaiter.home)
 app.post('/waiters/:username', routesWaiter.selectedWorkDays)
 app.get('/shifts', routesWaiter.displayShifts)

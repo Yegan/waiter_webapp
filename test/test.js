@@ -75,18 +75,16 @@ describe('Waiter Web-App', function () {
     // assert - did the right thing happen?
 
     // check if there is two shifts for Andy in the Database
-    const shiftsForYegan = await waiterShiftManager.getShifts(waiterYegan)
-    //console.log(shiftsForYegan)
+    const shiftsForYegan = await waiterShiftManager.aWaitersShift(waiterYegan)
 
     // assert.equal()
     assert.equal(Monday.id, shiftsForYegan[0].day_id)
     assert.equal(Saturday.id, shiftsForYegan[1].day_id)
   })
 
-  it ('should get all the days and all the shifts and match the waiter name to the corresponding day name of each shift ', async function () {
+  it('should get all the days and all the shifts and match the waiter name to the corresponding day name of each shift ', async function () {
     let waiterShiftManager = WaiterShiftManager(pool)
     await waiterShiftManager.addWaiterName('Yegan')
-    //let daysOfTheWeek = await waiterShiftManager.daysOfTheWeek()
 
     const shiftDays = ['Monday', 'Saturday']
 
@@ -94,12 +92,22 @@ describe('Waiter Web-App', function () {
     // act - make it happen
 
     await waiterShiftManager.storeShifts(waiterYegan, shiftDays)
-    
-    //let allshifts = await waiterShiftManager.getAllShifts()
-    let daysAndNames = await waiterShiftManager.getDaysAndNames()
-    console.log(daysAndNames)
-    //assert.equal(allShifts.waiter_name, {waiter_name})
+
+
+     let yegansShifts = await waiterShiftManager.aWaitersShift(waiterYegan)
+    assert.equal(yegansShifts[0].waiter_name, 'Yegan')
+    assert.equal(yegansShifts[0].week_day, 'Monday')
+    assert.equal(yegansShifts[1].waiter_name, 'Yegan')
+    assert.equal(yegansShifts[1].week_day, 'Saturday')
+
+
   })
+
+
+
+
+
+
 
   // it('should update the days that a waiter has selected to work', async function () {
 

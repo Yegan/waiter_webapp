@@ -40,10 +40,9 @@ module.exports = function (pool) {
   where waiter_name = $1 `
 
     let result = await pool.query(waiterShift, [name])
-    console.log(result.rows)
     return result.rows
   }
-
+  // returns all the days that all waiters have chosen to work
   async function getAllShifts () {
     const waiterShiftQuery = `select 
         waiters_table.id as waiter_id,
@@ -58,7 +57,8 @@ module.exports = function (pool) {
     return waiterShifts.rows
   }
 
-  async function getShifts (waiterName) {
+  // displays shift for a waiter that the waiter has chosen to work
+  async function aWaitersShift (waiterName) {
     const waiterShiftQuery = `select 
         waiters_table.id as waiter_id,
         waiters_table.waiter_name,
@@ -73,56 +73,24 @@ module.exports = function (pool) {
     return waiterShifts.rows
   }
 
-  async function getDaysAndNames () {
-    let shiftList = [{ day: 'Monday',
-      waiters: []
-    },
-
-    { day: 'Tuesday',
-      waiters: []
-    },
-
-    { day: 'Wednesday',
-      waiters: []
-    },
-
-    { day: 'Thursday',
-      waiters: []
-    },
-
-    { day: 'Friday',
-      waiters: []
-    },
-
-    { day: 'Saturday',
-      waiters: []
-    },
-
-    { day: 'Sunday',
-      waiters: []
-    }
-
-    ]
-
-    let allShifts = getShifts()
-
-    // let allDays = daysOfTheWeek()
-
-    for (let day in allShifts) {
-      console.log(day)
-      shiftList.forEach(eachDay => function () {
-        if (day.days_of_week == eachDay.day) {
-          shiftList.waiters.push(day.waiter_name)
+  async function getDaysAndNames (name) {
+    let shiftForX = await aWaitersShift(name)
+    let daysOfShift = await daysOfTheWeek()
+    for (const waiters of shiftForX) {
+      for (const day of daysOfShift) {
+        if (waiters.week_day === day.days_of_week) { 
+          day.checked = 'checked'
         }
-      })
+      }
     }
-    return shiftList
+    
+    return daysOfShift
   }
 
   return {
     daysOfTheWeek,
     storeShifts,
-    getShifts,
+    aWaitersShift,
     getAllShifts,
     addWaiterName,
     checksWaiterName,
