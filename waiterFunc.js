@@ -22,16 +22,16 @@ module.exports = function (pool) {
 
   // assigns waiters with corresponding days selected
   async function storeShifts (waiterName, shiftDays) {
-    let day = shiftDays
-
+    await pool.query('delete from shift_days')
     let waiterResult = await pool.query('select id from waiters_table where waiter_name = $1', [waiterName])
     let waiterId = waiterResult.rows[0].id
-    for (let eachDay of day) {
+    for (let eachDay of shiftDays) {
       let dayResult = await pool.query('select id from days_of_the_week where days_of_week = $1', [eachDay])
       let dayId = dayResult.rows[0].id
       await pool.query('insert into shift_days(waiter_id, days_id) values ($1, $2)', [waiterId, dayId])
     }
   }
+
   // returns waiters who are working a particular shift
   async function waiterShifts (name) {
     const waiterShift = `select * from waiters_table 
@@ -72,13 +72,13 @@ module.exports = function (pool) {
     let waiterShifts = await pool.query(waiterShiftQuery, [waiterName])
     return waiterShifts.rows
   }
-// compares two lists against each other comparing if days of the week match and thus adding a new key value pair to the object
+  // compares two lists against each other comparing if days of the week match and thus adding a new key value pair to the object
   async function getDaysAndNames (name) {
     let shiftForX = await aWaitersShift(name)
     let daysOfShift = await daysOfTheWeek()
     for (const waiters of shiftForX) {
       for (const day of daysOfShift) {
-        if (waiters.week_day === day.days_of_week) { 
+        if (waiters.week_day === day.days_of_week) {
           day.checked = 'checked'
         }
       }
