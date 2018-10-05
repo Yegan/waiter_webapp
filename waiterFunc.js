@@ -22,9 +22,10 @@ module.exports = function (pool) {
 
   // assigns waiters with corresponding days selected
   async function storeShifts (waiterName, shiftDays) {
-    await pool.query('delete from shift_days')
     let waiterResult = await pool.query('select id from waiters_table where waiter_name = $1', [waiterName])
     let waiterId = waiterResult.rows[0].id
+    await pool.query('delete from shift_days where waiter_id =$1', [waiterId])
+
     for (let eachDay of shiftDays) {
       let dayResult = await pool.query('select id from days_of_the_week where days_of_week = $1', [eachDay])
       let dayId = dayResult.rows[0].id

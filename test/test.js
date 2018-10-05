@@ -97,13 +97,52 @@ describe('Waiter Web-App', function () {
     const updateWorkShifts = ['Tuesday', 'Sunday']
 
     await waiterShiftManager.addWaiterName(waiterName)
+    // ensure there is some shifts in the db
     await waiterShiftManager.storeShifts(waiterName, shiftDays)
+    
+    let yegansInitialShifts = await waiterShiftManager.aWaitersShift(waiterName)
+
+    assert.strictEqual(yegansInitialShifts[0].waiter_name, 'Yegan')  
+    assert.equal(yegansInitialShifts[0].week_day, 'Monday')
+    assert.equal(yegansInitialShifts[1].week_day, 'Saturday')
+
+    // act
+
+    // now update these shifts
     await waiterShiftManager.storeShifts(waiterName, updateWorkShifts)
-    let yeganUpdateShift = await waiterShiftManager.aWaitersShift(waiterName)
-    assert.equal(yeganUpdateShift[0].waiter_name, 'Yegan')
-    assert.equal(yeganUpdateShift[1].week_day, 'Sunday')
-   assert.equal(yeganUpdateShift[0].week_day, 'Tuesday')
+    
+    // assert
+
+    // get the updated shifts
+    let yegansUpdatesShifts = await waiterShiftManager.aWaitersShift(waiterName)  
+    assert.strictEqual(yegansUpdatesShifts[0].waiter_name, 'Yegan')  
+    assert.equal(yegansUpdatesShifts[0].week_day, 'Tuesday')
+    assert.equal(yegansUpdatesShifts[1].week_day, 'Sunday')
+
   })
+
+  // it('should return all days along with all corresponding waiters for all days of the week', async function () {
+  //   // assemble - get things ready to make it happen
+  //   let waiterShiftManager = WaiterShiftManager(pool)
+
+  //   // Yegan shift
+  //   const waiterYegan = 'Yegan'
+  //   const yeganShift = ['Monday', 'Saturday']
+
+  //   // Andrew shift
+  //   const waiterAndrew = 'Andrew'
+  //   const andrewShift = ['Monday', 'Wednesday']
+
+  //   await waiterShiftManager.addWaiterName(waiterYegan)
+  //   await waiterShiftManager.storeShifts(waiterYegan, yeganShift)
+
+  //   await waiterShiftManager.addWaiterName(waiterAndrew)
+  //   await waiterShiftManager.storeShifts(waiterAndrew, andrewShift)  
+    
+  //   let allWaiterShifts = await waiterShiftManager.getAllShifts()
+  //   console.log(allWaiterShifts)
+  //   // assert.equal(allWaiterShifts, )
+  // })
 
   after(async function () {
     await pool.end()

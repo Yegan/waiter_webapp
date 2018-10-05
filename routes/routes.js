@@ -41,7 +41,7 @@ module.exports = function (waiterFunc) {
   async function displayShifts (req, res, next) {
     try {
       let displayDays = await waiterFunc.daysOfTheWeek()
-      let shifts = await waiterFunc.waiterShifts()
+      let shifts = await waiterFunc.getAllShifts()
       res.render('shifts', { displayDays, shifts })
     } catch (error) {
       next(error.stack)
