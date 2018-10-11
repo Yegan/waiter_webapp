@@ -86,6 +86,56 @@ module.exports = function (pool) {
     }
     return daysOfShift
   }
+  async function rosterOfWaitersAndDays () {
+    let waiterAndShifts = await pool.query(`select days_of_the_week.id, days_of_the_week.days_of_week, waiters_table.id, waiters_table.waiter_name
+    from days_of_the_week
+    left join shift_days on shift_days.days_id = days_of_the_week.id
+    left join waiters_table on waiters_table.id = shift_days.waiter_id;`)
+
+    let list = [
+      {
+        day: 'Monday',
+        waiters: []
+      },
+      {
+        day: 'Tuesday',
+        waiters: []
+      },
+      {
+        day: 'Wednesday',
+        waiters: []
+      },
+      {
+        day: 'Thursday',
+        waiters: []
+      },
+      {
+        day: 'Friday',
+        waiters: []
+      },
+      {
+        day: 'Saturday',
+        waiters: []
+      },
+      {
+        day: 'Sunday',
+        waiters: []
+      }
+
+    ]
+
+    let shifts = waiterAndShifts.rows
+    console.log(shifts)
+    for (let i = 0; i < shifts.length; i++) {
+      list.forEach(listDay => {
+        if (listDay.day === shifts.days_of_week) {
+          console.log(listDay.waiters)
+          list.waiters.push(shifts.waiter_name)
+        }
+      })
+    }
+    return list
+  }
 
   return {
     daysOfTheWeek,
@@ -95,6 +145,7 @@ module.exports = function (pool) {
     addWaiterName,
     checksWaiterName,
     waiterShifts,
-    getDaysAndNames
+    getDaysAndNames,
+    rosterOfWaitersAndDays
   }
 }
