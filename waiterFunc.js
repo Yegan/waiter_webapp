@@ -125,14 +125,16 @@ module.exports = function (pool) {
     ]
 
     let shifts = waiterAndShifts.rows
-    console.log(shifts)
+    // console.log(shifts)
     for (let i = 0; i < shifts.length; i++) {
-      list.forEach(listDay => {
-        if (listDay.day === shifts.days_of_week) {
-          console.log(listDay.waiters)
-          list.waiters.push(shifts.waiter_name)
-        }
-      })
+      let currentShift = shifts[i]
+      if (currentShift.waiter_name) {
+        list.forEach(listDay => {
+          if (listDay.day === currentShift.days_of_week) {
+            listDay.waiters.push(currentShift.waiter_name)
+          }
+        })
+      }
     }
     return list
   }

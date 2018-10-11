@@ -127,9 +127,9 @@ describe('Waiter Web-App', function () {
     // shifts for all waiters and days of all the waiters
     const schedule = [
       { day: 'Monday',
-        waiters: ['Yegan', 'Andrew'] },
+        waiters: ['Andrew', 'Yegan'] },
       { day: 'Tuesday',
-        waiters: ['Yegan', 'Andrew'] },
+        waiters: ['Andrew', 'Yegan'] },
       { day: 'Wednesday',
         waiters: [] },
       { day: 'Thursday',

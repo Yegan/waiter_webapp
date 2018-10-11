@@ -10,17 +10,27 @@
     </div>
     <div class="row">
         <div class="col-12-md input">
-            <table>
-                <tbody>
-                    {{#each displayDays}}
-
-                    <td>
-                        <th>{{days_of_week}}</th>
-                        <tr>{{waiter_name}}</tr>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    {{#each shifts}}
+                    <th>
+                        {{day}}
+                    </th>
+                    {{/each}}
+                </tr>
+                </thead>
+                <tr>
+                    {{#each shifts}}
+                    <td class="bg-primary">
+                        <ul class="waiter-list">
+                            {{#each waiters}}
+                                <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
                     </td>
                     {{/each}}
-
-                </tbody>
+                </tr>
 
             </table>
 
