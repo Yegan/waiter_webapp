@@ -93,55 +93,16 @@ module.exports = function (pool) {
     left join shift_days on shift_days.days_id = days_of_the_week.id
     left join waiters_table on waiters_table.id = shift_days.waiter_id;`)
 
-    let list = [
-      {
-        day: 'Monday',
-        waiters: [],
-        status: 'no-waiters'
-      },
-      {
-        day: 'Tuesday',
-        waiters: [],
-        status: 'no-waiters'
-      },
-      {
-        day: 'Wednesday',
-        waiters: [],
-        status: 'no-waiters'
-      },
-      {
-        day: 'Thursday',
-        waiters: [],
-        status: 'no-waiters'
-      },
-      {
-        day: 'Friday',
-        waiters: [],
-        status: 'no-waiters'
-      },
-      {
-        day: 'Saturday',
-        waiters: [],
-        status: 'no-waiters'
-      },
-      {
-        day: 'Sunday',
-        waiters: [],
-        status: 'no-waiters'
-      }
-
-    ]
-
+    let list = await createShiftDays()
+    console.log(list)
     let shifts = waiterAndShifts.rows
-    // console.log(shifts)
     for (let i = 0; i < shifts.length; i++) {
       let currentShift = shifts[i]
-      // console.log(currentShift)
       if (currentShift.waiter_name) {
         list.forEach(listDay => {
           if (listDay.day === currentShift.days_of_week) {
             listDay.waiters.push(currentShift.waiter_name)
-            // the number of waiters for the day changed...        
+            // the number of waiters for the day changed...
             if (listDay.waiters.length > 0 && listDay.waiters.length < 3) {
               listDay.status = 'not-enough'
             } else if (listDay.waiters.length === 3) {
@@ -153,12 +114,26 @@ module.exports = function (pool) {
         })
       }
     }
-    // console.log(list)
+    
     return list
   }
   async function tableDelete () {
     await pool.query('delete from shift_days')
     await pool.query('delete from waiters_table')
+  }
+
+  async function createShiftDays () {
+    // from the database - get all the days
+    const weekDays = await daysOfTheWeek()
+    // for each day found... create a an Object like this"
+    const shiftDays = weekDays.map(function (weekDay) {
+      return {
+        day: weekDay.days_of_week,
+        waiters: [],
+        status: 'no-waiters'
+      }
+    })
+    return shiftDays
   }
 
   return {
@@ -171,6 +146,7 @@ module.exports = function (pool) {
     waiterShifts,
     getDaysAndNames,
     rosterOfWaitersAndDays,
-    tableDelete
+    tableDelete,
+    createShiftDays
   }
 }
