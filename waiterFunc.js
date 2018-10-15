@@ -93,13 +93,12 @@ module.exports = function (pool) {
     left join shift_days on shift_days.days_id = days_of_the_week.id
     left join waiters_table on waiters_table.id = shift_days.waiter_id;`)
 
-    let list = await createShiftDays()
-    console.log(list)
+    let shiftDayList = await createShiftDays()
     let shifts = waiterAndShifts.rows
     for (let i = 0; i < shifts.length; i++) {
       let currentShift = shifts[i]
       if (currentShift.waiter_name) {
-        list.forEach(listDay => {
+        for (let listDay of shiftDayList) {
           if (listDay.day === currentShift.days_of_week) {
             listDay.waiters.push(currentShift.waiter_name)
             // the number of waiters for the day changed...
@@ -110,12 +109,13 @@ module.exports = function (pool) {
             } else if (listDay.waiters.length > 3) {
               listDay.status = 'too-many'
             }
+            // you found the day already - skip the rest
+            break
           }
-        })
+        }
       }
     }
-    
-    return list
+    return shiftDayList
   }
   async function tableDelete () {
     await pool.query('delete from shift_days')
@@ -131,7 +131,7 @@ module.exports = function (pool) {
         day: weekDay.days_of_week,
         waiters: [],
         status: 'no-waiters'
-      }
+      };
     })
     return shiftDays
   }
