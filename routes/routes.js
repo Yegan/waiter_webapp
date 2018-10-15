@@ -34,7 +34,7 @@ module.exports = function (waiterFunc) {
     try {
       let user = req.params.username
       let days = Array.isArray(req.body.dayName) ? req.body.dayName : [req.body.dayName]
-       await waiterFunc.addWaiterName(user)
+      await waiterFunc.addWaiterName(user)
       req.flash('successfully', `Your shift has been added ${user}`)
       // let displayDays = await waiterFunc.daysOfTheWeek()
       await waiterFunc.storeShifts(user, days)

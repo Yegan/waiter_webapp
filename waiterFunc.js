@@ -88,10 +88,12 @@ module.exports = function (pool) {
     return daysOfShift
   }
   async function rosterOfWaitersAndDays () {
-    let waiterAndShifts = await pool.query(`select days_of_the_week.id, days_of_the_week.days_of_week, waiters_table.id, waiters_table.waiter_name
+    let waiterAndShifts = await pool.query(`select 
+      days_of_the_week.id, days_of_the_week.days_of_week, waiters_table.id, waiters_table.waiter_name
     from days_of_the_week
     left join shift_days on shift_days.days_id = days_of_the_week.id
-    left join waiters_table on waiters_table.id = shift_days.waiter_id;`)
+    left join waiters_table on waiters_table.id = shift_days.waiter_id
+    order by days_of_the_week.days_of_week, waiters_table.waiter_name;`)
 
     let shiftDayList = await createShiftDays()
     let shifts = waiterAndShifts.rows
@@ -110,7 +112,7 @@ module.exports = function (pool) {
               listDay.status = 'too-many'
             }
             // you found the day already - skip the rest
-            break
+            // break
           }
         }
       }
