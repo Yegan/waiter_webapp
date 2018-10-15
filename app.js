@@ -24,7 +24,9 @@ app.engine('handlebars', exphbs({
   defaultLayout: 'main'
 
 }))
-
+// initialise the flash middleware
+app.use(flash())
+app.use(bodyParser.json())
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({
@@ -36,15 +38,13 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-
+app.get('', routesWaiter.path)
 app.get('/waiters', routesWaiter.login)
 app.get('/waiters/:username', routesWaiter.home)
 app.post('/waiters/:username', routesWaiter.selectedWorkDays)
 app.get('/shifts', routesWaiter.displayShifts)
+app.post('/shifts', routesWaiter.deleteAll)
 
-// initialise the flash middleware
-app.use(flash())
-app.use(bodyParser.json())
 
 let PORT = process.env.PORT || 3020
 

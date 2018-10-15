@@ -7,6 +7,7 @@ module.exports = function (pool) {
 
   // adds a waiter into the database only if the name of the waiter has not yet been added
   async function addWaiterName (name) {
+    name.toUpperCase()
     let nameOfWaiter = await pool.query('select * from waiters_table where waiter_name =$1', [name])
 
     let getWaiter = nameOfWaiter.rowCount
@@ -95,31 +96,38 @@ module.exports = function (pool) {
     let list = [
       {
         day: 'Monday',
-        waiters: []
+        waiters: [],
+        status: 'no-waiters'
       },
       {
         day: 'Tuesday',
-        waiters: []
+        waiters: [],
+        status: 'no-waiters'
       },
       {
         day: 'Wednesday',
-        waiters: []
+        waiters: [],
+        status: 'no-waiters'
       },
       {
         day: 'Thursday',
-        waiters: []
+        waiters: [],
+        status: 'no-waiters'
       },
       {
         day: 'Friday',
-        waiters: []
+        waiters: [],
+        status: 'no-waiters'
       },
       {
         day: 'Saturday',
-        waiters: []
+        waiters: [],
+        status: 'no-waiters'
       },
       {
         day: 'Sunday',
-        waiters: []
+        waiters: [],
+        status: 'no-waiters'
       }
 
     ]
@@ -128,15 +136,29 @@ module.exports = function (pool) {
     // console.log(shifts)
     for (let i = 0; i < shifts.length; i++) {
       let currentShift = shifts[i]
+      // console.log(currentShift)
       if (currentShift.waiter_name) {
         list.forEach(listDay => {
           if (listDay.day === currentShift.days_of_week) {
             listDay.waiters.push(currentShift.waiter_name)
+            // the number of waiters for the day changed...        
+            if (listDay.waiters.length > 0 && listDay.waiters.length < 3) {
+              listDay.status = 'not-enough'
+            } else if (listDay.waiters.length === 3) {
+              listDay.status = 'enough'
+            } else if (listDay.waiters.length > 3) {
+              listDay.status = 'too-many'
+            }
           }
         })
       }
     }
+    // console.log(list)
     return list
+  }
+  async function tableDelete () {
+    await pool.query('delete from shift_days')
+    await pool.query('delete from waiters_table')
   }
 
   return {
@@ -148,6 +170,7 @@ module.exports = function (pool) {
     checksWaiterName,
     waiterShifts,
     getDaysAndNames,
-    rosterOfWaitersAndDays
+    rosterOfWaitersAndDays,
+    tableDelete
   }
 }

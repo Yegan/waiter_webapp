@@ -12,20 +12,20 @@
         <div class="col-12-md input">
             <table class="table">
                 <thead class="thead-dark">
-                <tr>
-                    {{#each shifts}}
-                    <th>
-                        {{day}}
-                    </th>
-                    {{/each}}
-                </tr>
+                    <tr>
+                        {{#each shifts}}
+                        <th>
+                            {{day}}
+                        </th>
+                        {{/each}}
+                    </tr>
                 </thead>
                 <tr>
                     {{#each shifts}}
-                    <td class="bg-primary">
+                    <td class="{{status}}">
                         <ul class="waiter-list">
                             {{#each waiters}}
-                                <li>{{this}}</li>
+                            <li>{{this}}</li>
                             {{/each}}
                         </ul>
                     </td>
@@ -33,10 +33,39 @@
                 </tr>
 
             </table>
-
         </div>
     </div>
-    </form>
+     <div class="row">
+        <div class="col-10-md">
+            <div class="delete">
+                <span class="delete">{{messages.delete}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="/shifts" method="post">
+                <button class="col-md-2 offset-md-2" type="Submit"> Delete</button>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class='my-legend col--12-md'>
+            <div class='legend-title'>Current staff per day on shift</div>
+            <div class='legend-scale'>
+                <ul class='legend-labels'>
+                    <li><span style='background:#FF9A00;'></span>Not enough waiters</li>
+                    <li><span style='background:#20C300;'></span>Good amount of waiters working</li>
+                    <li><span style='background:#ff3300;'></span>Too many waiters</li>
+                    <li><span style='background: #959595;'></span>No waiters</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+   
 
 
 

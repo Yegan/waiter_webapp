@@ -3,24 +3,34 @@
 
 <body>
 
-        <div class="row">
-            <div class="col-12-md">
-                <h2>Waiter Web</h2>
+    <div class="row">
+        <div class="col-12-md">
+            <h2>Waiter Web</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-10-md">
+            <div class="successfully">
+                <span class="successfully">{{messages.successfully}}</span>
             </div>
         </div>
-        <form action="/waiters/{{user}}" method='post'>
-         <div class="row">
+    </div>
+
+    <form action="/waiters/{{user}}" method='post'>
+        <div class="row">
             <div class="col-12-md input">
                 {{#each displayDays}}
-                <input type="checkbox"  aria-label="Checkbox for following text input" name = 'dayName' {{checked}} value="{{days_of_week}}">{{days_of_week}} </input>
+                <input type="checkbox" aria-label="Checkbox for following text input" name='dayName' {{checked}} value="{{days_of_week}}">{{days_of_week}}
+                </input>
                 {{/each}}
             </div>
         </div>
         <button type="submit">Submit</button>
-        </form>
+    </form>
 
 
-       
+
 
 
 

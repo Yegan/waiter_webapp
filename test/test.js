@@ -15,110 +15,109 @@ describe('Waiter Web-App', function () {
     await pool.query('delete from shift_days')
     await pool.query('delete from waiters_table')
   })
-  // it('The function should bring back all the days of the week from the table ', async function () {
-  //   const weekDays = [ 'Monday',
-  //     'Tuesday',
-  //     'Wednesday',
-  //     'Thursday',
-  //     'Friday',
-  //     'Saturday',
-  //     'Sunday' ]
+  it('The function should bring back all the days of the week from the table ', async function () {
+    const weekDays = [ 'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday' ]
 
-  //   let waiterShiftManager = WaiterShiftManager(pool)
+    let waiterShiftManager = WaiterShiftManager(pool)
 
-  //   let daysOfTheWeek = await waiterShiftManager.daysOfTheWeek()
+    let daysOfTheWeek = await waiterShiftManager.daysOfTheWeek()
 
-  //   const daysInDatabase = daysOfTheWeek.map((r) => r.days_of_week)
+    const daysInDatabase = daysOfTheWeek.map((r) => r.days_of_week)
 
-  //   assert.deepEqual(daysInDatabase, weekDays)
-  // })
+    assert.deepEqual(daysInDatabase, weekDays)
+  })
 
-  // it('The function should check if Yegan has been entered into the database ', async function () {
-  //   let waiterShiftManager = WaiterShiftManager(pool)
+  it('The function should check if Yegan has been entered into the database ', async function () {
+    let waiterShiftManager = WaiterShiftManager(pool)
 
-  //   await waiterShiftManager.addWaiterName('Yegan')
-  //   await waiterShiftManager.addWaiterName('Greg')
+    await waiterShiftManager.addWaiterName('Yegan')
+    await waiterShiftManager.addWaiterName('Greg')
 
-  //   let selectWaiter = await waiterShiftManager.checksWaiterName()
-  //   let waiter = ['Yegan', 'Greg']
+    let selectWaiter = await waiterShiftManager.checksWaiterName()
+    let waiter = ['Yegan', 'Greg']
 
-  //   let waiterMap = selectWaiter.map((result) => result.waiter_name)
-  //   assert.deepEqual(waiterMap, waiter)
-  // })
+    let waiterMap = selectWaiter.map((result) => result.waiter_name)
+    assert.deepEqual(waiterMap, waiter)
+  })
 
-  // it('should store the days that a waiter has selected to work', async function () {
-  //   // assemble - get things ready to make it happen
-  //   let waiterShiftManager = WaiterShiftManager(pool)
-  //   await waiterShiftManager.addWaiterName('Yegan')
+  it('should store the days that a waiter has selected to work', async function () {
+    // assemble - get things ready to make it happen
+    let waiterShiftManager = WaiterShiftManager(pool)
+    await waiterShiftManager.addWaiterName('Yegan')
 
-  //   let daysOfTheWeek = await waiterShiftManager.daysOfTheWeek()
-  //   const Monday = daysOfTheWeek[0]
-  //   const Saturday = daysOfTheWeek[5]
+    let daysOfTheWeek = await waiterShiftManager.daysOfTheWeek()
+    const Monday = daysOfTheWeek[0]
+    const Saturday = daysOfTheWeek[5]
 
-  //   const shiftDays = ['Monday', 'Saturday']
+    const shiftDays = ['Monday', 'Saturday']
 
-  //   const waiterYegan = 'Yegan'
-  //   // act - make it happen
+    const waiterYegan = 'Yegan'
+    // act - make it happen
 
-  //   await waiterShiftManager.storeShifts(waiterYegan, shiftDays)
-  //   // assert - did the right thing happen?
+    await waiterShiftManager.storeShifts(waiterYegan, shiftDays)
+    // assert - did the right thing happen?
 
-  //   // check if there is two shifts for Andy in the Database
-  //   const shiftsForYegan = await waiterShiftManager.aWaitersShift(waiterYegan)
+    // check if there is two shifts for Andy in the Database
+    const shiftsForYegan = await waiterShiftManager.aWaitersShift(waiterYegan)
 
-  //   // assert.equal()
-  //   assert.equal(Monday.id, shiftsForYegan[0].day_id)
-  //   assert.equal(Saturday.id, shiftsForYegan[1].day_id)
-  // })
+    assert.equal(Monday.id, shiftsForYegan[0].day_id)
+    assert.equal(Saturday.id, shiftsForYegan[1].day_id)
+  })
 
-  // it('should get all the days and all the shifts and match the waiter name to the corresponding day name of each shift ', async function () {
-  //   let waiterShiftManager = WaiterShiftManager(pool)
-  //   await waiterShiftManager.addWaiterName('Yegan')
+  it('should get all the days and all the shifts and match the waiter name to the corresponding day name of each shift ', async function () {
+    let waiterShiftManager = WaiterShiftManager(pool)
+    await waiterShiftManager.addWaiterName('Yegan')
 
-  //   const shiftDays = ['Monday', 'Saturday']
+    const shiftDays = ['Monday', 'Saturday']
 
-  //   const waiterYegan = 'Yegan'
-  //   // act - make it happen
+    const waiterYegan = 'Yegan'
+    // act - make it happen
 
-  //   await waiterShiftManager.storeShifts(waiterYegan, shiftDays)
+    await waiterShiftManager.storeShifts(waiterYegan, shiftDays)
 
-  //   let yegansShifts = await waiterShiftManager.aWaitersShift(waiterYegan)
-  //   assert.equal(yegansShifts[0].waiter_name, 'Yegan')
-  //   assert.equal(yegansShifts[0].week_day, 'Monday')
-  //   assert.equal(yegansShifts[1].waiter_name, 'Yegan')
-  //   assert.equal(yegansShifts[1].week_day, 'Saturday')
-  // })
+    let yegansShifts = await waiterShiftManager.aWaitersShift(waiterYegan)
+    assert.equal(yegansShifts[0].waiter_name, 'Yegan')
+    assert.equal(yegansShifts[0].week_day, 'Monday')
+    assert.equal(yegansShifts[1].waiter_name, 'Yegan')
+    assert.equal(yegansShifts[1].week_day, 'Saturday')
+  })
 
-  // it('should update the days that a waiter has selected to work', async function () {
-  //   // assemble - get things ready to make it happen
-  //   let waiterShiftManager = WaiterShiftManager(pool)
-  //   const waiterName = 'Yegan'
-  //   const shiftDays = ['Monday', 'Saturday']
-  //   const updateWorkShifts = ['Tuesday', 'Sunday']
+  it('should update the days that a waiter has selected to work', async function () {
+    // assemble - get things ready to make it happen
+    let waiterShiftManager = WaiterShiftManager(pool)
+    const waiterName = 'Yegan'
+    const shiftDays = ['Monday', 'Saturday']
+    const updateWorkShifts = ['Tuesday', 'Sunday']
 
-  //   await waiterShiftManager.addWaiterName(waiterName)
-  //   // ensure there is some shifts in the db
-  //   await waiterShiftManager.storeShifts(waiterName, shiftDays)
+    await waiterShiftManager.addWaiterName(waiterName)
+    // ensure there is some shifts in the db
+    await waiterShiftManager.storeShifts(waiterName, shiftDays)
 
-  //   let yegansInitialShifts = await waiterShiftManager.aWaitersShift(waiterName)
+    let yegansInitialShifts = await waiterShiftManager.aWaitersShift(waiterName)
 
-  //   assert.strictEqual(yegansInitialShifts[0].waiter_name, 'Yegan')
-  //   assert.equal(yegansInitialShifts[0].week_day, 'Monday')
-  //   assert.equal(yegansInitialShifts[1].week_day, 'Saturday')
+    assert.strictEqual(yegansInitialShifts[0].waiter_name, 'Yegan')
+    assert.equal(yegansInitialShifts[0].week_day, 'Monday')
+    assert.equal(yegansInitialShifts[1].week_day, 'Saturday')
 
-  //   // act
+    // act
 
-  //   // now update these shifts
-  //   await waiterShiftManager.storeShifts(waiterName, updateWorkShifts)
+    // now update these shifts
+    await waiterShiftManager.storeShifts(waiterName, updateWorkShifts)
 
-  //   // assert
+    // assert
 
-  //   // get the updated shifts
-  //   let yegansUpdatesShifts = await waiterShiftManager.aWaitersShift(waiterName)
-  //   assert.strictEqual(yegansUpdatesShifts[0].waiter_name, 'Yegan')
-  //   assert.equal(yegansUpdatesShifts[0].week_day, 'Tuesday')
-  //   assert.equal(yegansUpdatesShifts[1].week_day, 'Sunday')
-  // })
+    // get the updated shifts
+    let yegansUpdatesShifts = await waiterShiftManager.aWaitersShift(waiterName)
+    assert.strictEqual(yegansUpdatesShifts[0].waiter_name, 'Yegan')
+    assert.equal(yegansUpdatesShifts[0].week_day, 'Tuesday')
+    assert.equal(yegansUpdatesShifts[1].week_day, 'Sunday')
+  })
 
   it('should return all days along with all corresponding waiters for all days of the week', async function () {
     // assemble - get things ready to make it happen
@@ -127,18 +126,25 @@ describe('Waiter Web-App', function () {
     // shifts for all waiters and days of all the waiters
     const schedule = [
       { day: 'Monday',
+        status: 'not-enough',
         waiters: ['Andrew', 'Yegan'] },
       { day: 'Tuesday',
+        status: 'not-enough',
         waiters: ['Andrew', 'Yegan'] },
       { day: 'Wednesday',
+        status: 'no-waiters',
         waiters: [] },
       { day: 'Thursday',
+        status: 'not-enough',
         waiters: ['Yegan'] },
       { day: 'Friday',
+        status: 'not-enough',
         waiters: ['Andrew'] },
       { day: 'Saturday',
+        status: 'no-waiters',
         waiters: [] },
       { day: 'Sunday',
+        status: 'not-enough',
         waiters: ['Andrew'] }
     ]
     const waiterYegan = 'Yegan'
@@ -157,6 +163,7 @@ describe('Waiter Web-App', function () {
 
     let shiftSchedule = await waiterShiftManager.rosterOfWaitersAndDays()
     assert.deepEqual(shiftSchedule, schedule)
+    
   })
 
   after(async function () {
