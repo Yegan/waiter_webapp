@@ -127,10 +127,10 @@ describe('Waiter Web-App', function () {
     const schedule = [
       { day: 'Monday',
         status: 'not-enough',
-        waiters: ['Andrew', 'Yegan'] },
+        waiters: ['Yegan', 'Andrew'] },
       { day: 'Tuesday',
         status: 'not-enough',
-        waiters: ['Andrew', 'Yegan'] },
+        waiters: ['Yegan', 'Andrew'] },
       { day: 'Wednesday',
         status: 'no-waiters',
         waiters: [] },
@@ -153,15 +153,16 @@ describe('Waiter Web-App', function () {
     const waiterAndrew = 'Andrew'
     const andrewShift = ['Monday', 'Tuesday', 'Friday', 'Sunday']
 
-    await waiterShiftManager.addWaiterName(waiterYegan)
-    await waiterShiftManager.storeShifts(waiterYegan, yeganShift)
-
     await waiterShiftManager.addWaiterName(waiterAndrew)
     await waiterShiftManager.storeShifts(waiterAndrew, andrewShift)
+
+    await waiterShiftManager.addWaiterName(waiterYegan)
+    await waiterShiftManager.storeShifts(waiterYegan, yeganShift)
 
     await waiterShiftManager.getAllShifts()
 
     let shiftSchedule = await waiterShiftManager.rosterOfWaitersAndDays()
+    console.log(shiftSchedule)
     assert.deepEqual(shiftSchedule, schedule)
     
   })
