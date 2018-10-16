@@ -64,8 +64,35 @@ td {
       text-transform: capitalize;
   }
   .successfully{
+      font-weight: bold;
       color: #20C300;
   }
   .delete{
       color: red;
   }
+.header h2{
+    text-align: center;
+}
+
+label {
+    margin: 1em;
+}
+body{
+    background-color: #959595
+}
+.color{
+    margin-left: 23em;
+    width: 20em;
+    height: 20em;
+    background-color: white;
+}
+.waiter-home{
+    margin-left: 5em;
+    background-color: white;
+    width: 60em;
+    height: 11em;
+
+}
+.shifts{
+    background-color: white;
+}
