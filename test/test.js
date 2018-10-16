@@ -46,7 +46,7 @@ describe('Waiter Web-App', function () {
     assert.deepEqual(waiterMap, waiter)
   })
 
-  it('should store the days that a waiter has selected to work', async function () {
+  it('The function should store the days that a waiter has selected to work', async function () {
     // assemble - get things ready to make it happen
     let waiterShiftManager = WaiterShiftManager(pool)
     await waiterShiftManager.addWaiterName('Yegan')
@@ -70,7 +70,7 @@ describe('Waiter Web-App', function () {
     assert.equal(Saturday.id, shiftsForYegan[1].day_id)
   })
 
-  it('should get all the days and all the shifts and match the waiter name to the corresponding day name of each shift ', async function () {
+  it('The function should get all the days and all the shifts and match the waiter name to the corresponding day name of each shift ', async function () {
     let waiterShiftManager = WaiterShiftManager(pool)
     await waiterShiftManager.addWaiterName('Yegan')
 
@@ -88,7 +88,7 @@ describe('Waiter Web-App', function () {
     assert.equal(yegansShifts[1].week_day, 'Saturday')
   })
 
-  it('should update the days that a waiter has selected to work', async function () {
+  it('The function should update the days that a waiter has selected to work', async function () {
     // assemble - get things ready to make it happen
     let waiterShiftManager = WaiterShiftManager(pool)
     const waiterName = 'Yegan'
@@ -119,7 +119,7 @@ describe('Waiter Web-App', function () {
     assert.equal(yegansUpdatesShifts[1].week_day, 'Sunday')
   })
 
-  it('should return all days along with all corresponding waiters for all days of the week', async function () {
+  it('The function should return all days along with all corresponding waiters for all days of the week', async function () {
     // assemble - get things ready to make it happen
     let waiterShiftManager = WaiterShiftManager(pool)
 
@@ -155,10 +155,11 @@ describe('Waiter Web-App', function () {
 
     await waiterShiftManager.addWaiterName(waiterAndrew)
     await waiterShiftManager.addWaiterName(waiterYegan)
+
     await waiterShiftManager.storeShifts(waiterAndrew, andrewShift)
     await waiterShiftManager.storeShifts(waiterYegan, yeganShift)
 
-    await waiterShiftManager.getAllShifts()
+    // await waiterShiftManager.getAllShifts()
 
     let shiftSchedule = await waiterShiftManager.rosterOfWaitersAndDays()
     
