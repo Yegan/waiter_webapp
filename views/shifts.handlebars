@@ -43,13 +43,47 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Button trigger modal -->
         <div class="row justify-content-md-center">
-            <div class="col-md-4">
-                <form action="/days" method="post">
-                    <button class="btn btn-danger btn-block" type="Submit"> Clear</button>
-                </form>
-            </div>
-        </div>
+        <div class="col-7-md">
+<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">
+  Clear
+</button>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure, you want to clear the shifts table?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="/days" method="post">
+        <button type="submit" class="btn btn-danger">Clear</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
         <br>
 
         <div class="row justify-content-md-center">
@@ -58,7 +92,7 @@
                 <div class='legend-scale'>
                     <ul class='legend-labels'>
                         <li><span style='background:#FF9A00;'></span>Not enough waiters</li>
-                        <li><span style='background:#20C300;'></span>Good amount of waiters working</li>
+                        <li><span style='background:#20C300;'></span>All good</li>
                         <li><span style='background:#ff3300;'></span>Too many waiters</li>
                         <li><span style='background: #959595;'></span>No waiters</li>
                     </ul>
@@ -66,6 +100,7 @@
             </div>
         </div>
     </div>
+    
 
 
 

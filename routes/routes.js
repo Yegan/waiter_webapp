@@ -34,7 +34,6 @@ module.exports = function (waiterFunc) {
     try {
       let user = req.params.username
       let days = Array.isArray(req.body.dayName) ? req.body.dayName : [req.body.dayName]
-      console.log(days)
 
       if (days[0] === undefined) {
         req.flash('select', `Please select your shift ${user}`)
@@ -63,11 +62,13 @@ module.exports = function (waiterFunc) {
   }
   async function deleteAll (req, res, next) {
     try {
-      let shifts = await waiterFunc.rosterOfWaitersAndDays()
-      let clear = await waiterFunc.tableDelete()
+      await waiterFunc.tableDelete()
 
+      let shifts = await waiterFunc.rosterOfWaitersAndDays()
+
+      res.render('shifts', { shifts })
       req.flash('delete', 'All waiter shifts have been cleared')
-      res.render('shifts', { shifts, clear })
+
     } catch (error) {
       next(error)
     }
