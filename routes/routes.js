@@ -64,10 +64,10 @@ module.exports = function (waiterFunc) {
   async function deleteAll (req, res, next) {
     try {
       let shifts = await waiterFunc.rosterOfWaitersAndDays()
-      await waiterFunc.tableDelete()
+      let clear = await waiterFunc.tableDelete()
 
       req.flash('delete', 'All waiter shifts have been cleared')
-      res.render('shifts', { shifts })
+      res.render('shifts', { shifts, clear })
     } catch (error) {
       next(error)
     }
