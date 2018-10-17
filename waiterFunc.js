@@ -133,7 +133,7 @@ module.exports = function (pool) {
         day: weekDay.days_of_week,
         waiters: [],
         status: 'no-waiters'
-      };
+      }
     })
     return shiftDays
   }

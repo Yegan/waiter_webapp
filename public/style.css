@@ -68,6 +68,7 @@ td {
       color: #20C300;
   }
   .delete{
+    font-weight: bold;
       color: red;
   }
 .header h2{
@@ -90,9 +91,13 @@ body{
     margin-left: 5em;
     background-color: white;
     width: 60em;
-    height: 11em;
+    height: 13em;
 
 }
 .shifts{
     background-color: white;
+}
+.select{
+    font-weight: bold;
+    color: red;
 }

@@ -42,9 +42,8 @@ app.get('', routesWaiter.path)
 app.get('/waiters', routesWaiter.login)
 app.get('/waiters/:username', routesWaiter.home)
 app.post('/waiters/:username', routesWaiter.selectedWorkDays)
-app.get('/shifts', routesWaiter.displayShifts)
-app.post('/shifts', routesWaiter.deleteAll)
-
+app.get('/days', routesWaiter.displayShifts)
+app.post('/days', routesWaiter.deleteAll)
 
 let PORT = process.env.PORT || 3020
 
