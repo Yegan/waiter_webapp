@@ -19,7 +19,8 @@ module.exports = function (waiterFunc) {
 
   async function login (req, res, next) {
     try {
-      let user = req.query.user
+      let name = req.query.user
+      let user = name.toUpperCase()
       if (!user) {
         res.render('user')
       } else {
@@ -36,6 +37,7 @@ module.exports = function (waiterFunc) {
       let days = Array.isArray(req.body.dayName) ? req.body.dayName : [req.body.dayName]
 
       if (days[0] === undefined) {
+        
         req.flash('select', `Please select your shift ${user}`)
         res.redirect(`${user}`)
       } else {
